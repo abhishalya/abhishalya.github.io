@@ -48,6 +48,12 @@ face issues in one if you are more acquainted with the other.
 You can hear about some people mentioning about the address space of processors
 being linearly starting from 0, and it was there is microcontrollers as so on.
 
+From what I've heard people prefer the 1-based indexing because it corresponds
+natural language (i.e. first, second, etc but there is no zeroth) to start from
+it. While people considering 0-based indexing consider the indices to be
+offsets as to they way CPU calculates the absolute memory location. Offsets
+start from 0 and it suddenly it becomes only logical to have 0-based indexing.
+
 But personally, I think there's not much to talk about here. I think its just a
 personal preference since here we are only working with high level code and
 this issue would never make it to the lower levels based on what indexing type
