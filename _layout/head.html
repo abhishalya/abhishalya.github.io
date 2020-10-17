@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{if hasmath}} {{insert head_katex.html }} {{end}}
+  {{if hascode}} {{insert head_highlight.html }} {{end}}
+  {{insert style.html}}
+  {{isdef title}} <title>{{fill title}}</title> {{end}}
+</head>
+<body>
+  <header>
+    <a class="title" href="/"><h2>@abhishalya</h2></a>
+    {{ insert navbar.html }}
+  </header>
+  <main>
+    <!-- Content appended here -->

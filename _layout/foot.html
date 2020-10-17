@@ -1,0 +1,14 @@
+  </main>
+  <!-- CONTENT ENDS HERE -->
+    </div>  <!-- div: content container -->
+    {{ if hasmath }}
+        {{ insert foot_katex.html }}
+    {{ end }}
+    {{ if hascode }}
+        {{ insert foot_highlight.html }}
+    {{ end }}
+    <footer>
+      Made with love and <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>
+    </footer>
+  </body>
+</html>
