@@ -31,7 +31,7 @@ Before we move on to using these packages, we first need to make sure we have
 everything we need.
 
 Interact works with the following frontends:
-- [Juno](http://junolab.org/) - A flexible IDE for the 21st century
+- [Juno](https://junolab.org/) - A flexible IDE for the 21st century
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) - Jupyter notebooks
 (and Jupyter Lab) for Julia
 - [Blink](https://github.com/JunoLab/Blink.jl) - An Electron wrapper you can
@@ -81,7 +81,7 @@ can include in your app. Also, you can create you own
 if you want to. Here we will only focus on the available widgets.
 
 So, here we will be trying to replicate the UI of the
-[DiffEqOnline](http://app.juliadiffeq.org/sde) app. We can see that the UI
+[DiffEqOnline](https://app.juliadiffeq.org/sde) app. We can see that the UI
 contains text input fields, numerical inputs and a dropdown menu. All of which
 we can implement using the available widgets of Interact as follows:
 

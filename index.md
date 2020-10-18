@@ -9,9 +9,9 @@ and residing in India. I love to code, play sports, litsen to music and watch
 movies.
 
 I would love to have a chat with you. Find me on
-[LinkedIn](https://linkedin.com/),
-[Github](https://github.com),
-[Twitter](https://twitter.com).
+[LinkedIn](https://www.linkedin.com/in/abhishalya/),
+[Github](https://github.com/abhishalya),
+[Twitter](https://twitter.com/abhishalya).
 
 ---
 
@@ -22,7 +22,8 @@ I would love to have a chat with you. Find me on
 ~~~
 
 Currently working as a MLH fellow contributing to some of the Julia projects
-including [Flux.jl]() and [Documenter.jl]().
+including [Flux.jl](https://fluxml.ai/) and
+[Documenter.jl](https://github.com/JuliaDocs/Documenter.jl/).
 
 >Will get more experince as I work more. Actively looking for internships.
 
@@ -34,7 +35,8 @@ including [Flux.jl]() and [Documenter.jl]().
 <h2>Google Code-in Winner</h2>
 ~~~
 
-I was one of the 50 winners in [Google Code-in competition]()
+I was one of the 50 winners in
+[Google Code-in competition](https://codein.withgoogle.com)
 while contributing to [The Julia Programming Language](https://julialang.org).
 Contributed over several open-source packages and repositories. In love with
 Julia ever since. :heart:
