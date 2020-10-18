@@ -41,4 +41,5 @@ Julia ever since. :heart:
 
 ---
 
-:star: Do checkout my blog on [#covid](), [#julia](), [#code-in](), [#mlh]().
+:star: Do checkout my blog on [#covid](/tag/covid), [#julia](/tag/julia),
+[#code-in](/tag/code-in), [#mlh](/tag/mlh).
