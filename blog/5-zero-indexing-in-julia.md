@@ -27,7 +27,7 @@ want from Julia but are not available out of the box.
 For this task, we are concerned about the 0-based indexing and in order to do
 that you can simply declare an OffsetArray in the following manner:
 
-```jl
+```julia
 julia> using OffsetArrays
 
 julia> x = OffsetArray([1, 2, 3], 0:2)
@@ -40,21 +40,21 @@ julia> x = OffsetArray([1, 2, 3], 0:2)
 Here I'm just creating a vector with the values `1, 2, 3` with a relative
 indexing of 0 to 2. Hence, if I ran:
 
-```jl
+```julia
 julia> x[0]
 1
 ```
 
 or if I ran:
 
-```jl
+```julia
 julia> x[2]
 3
 ```
 
 or even this:
 
-```jl
+```julia
 julia> x[end]
 3
 ```

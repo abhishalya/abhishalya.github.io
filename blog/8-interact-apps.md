@@ -65,7 +65,7 @@ julia> ]
 (v1.3) pkg> add WebIO
 ```
 
-```jl
+```julia
 using WebIO
 WebIO.install_jupyter_nbextension()
 ```
@@ -85,7 +85,7 @@ So, here we will be trying to replicate the UI of the
 contains text input fields, numerical inputs and a dropdown menu. All of which
 we can implement using the available widgets of Interact as follows:
 
-```jl
+```julia
 # Textarea for the input equations (for multiline input)
 input_eqn = Widgets.textarea(label = "Enter the system of differential equations here:",
                              value = "dx = a*x - b*x*y\ndy = -c*y + d*x*y")
@@ -140,7 +140,7 @@ horizontal line between each element and a vertical margin of 20px using
 
 So, the final result should be something like this:
 
-```jl
+```julia
 ui = vbox(vskip(20px), input_eqn, vskip(20px), hline(),
           vskip(20px), input_param, vskip(20px), hline(),
           vskip(20px), input_noise, vskip(20px), hline(),
@@ -165,7 +165,7 @@ are `Observables`.
 Observables are like `Ref`s but you can listen to changes.
 
 As an example:
-```jl
+```julia
 using Observables
 obv = Observable(0)
 
@@ -187,7 +187,7 @@ So, for the above example we need to construct an observable for each of the
 elements we just created. I'll define a new function `make_observable` to do
 this. But before that let's define a scope object to enclose the observables.
 
-```jl
+```julia
 scope = Scope()
 ```
 
@@ -206,7 +206,7 @@ a click of the `solve_but`.
 
 So, to do this we might do something like this:
 
-```jl
+```julia
 function makeobservable(key, val = get(dict, key, nothing))
     scope[key] = Observable{Any}(val)
 end
@@ -226,7 +226,7 @@ input_noise  = Widgets.textarea(label = "Input the noise function here:",
 Finally, for the button we need an observable for counting clicks. We can do
 that like this:
 
-```jl
+```julia
 clicks = scope["clicks"] = Observable{Any}(0)
 ```
 
@@ -234,7 +234,7 @@ Now, we need to provide some initial data for all of the elements. So, we will
 construct a dict with the keys for each of the element and values set to the
 initial values of their corresponding elements.
 
-```jl
+```julia
 const init_dict = Dict(
     "input_eqn" =>"dx = a*x - b*x*y\ndy = -c*y + d*x*y",
     "input_param" =>"a=1.5, b=1, c=3, d=1",
@@ -252,14 +252,14 @@ const init_dict = Dict(
 Finally, we will construct a dict containing all of the form input elements like
 this:
 
-```jl
+```julia
 form_input = Observable{Dict}(dict)
 form_input = makeobservable("form_input", init_dict)
 ```
 
 Finally to update the `form_input` on the click, we can do something like this:
 
-```jl
+```julia
 form_contents = Dict(key=> @js $(scope[key])[] for key in keys(init_dict))
 onjs(clicks, @js () ->$form_input[] = $form_contents)
 ```
@@ -269,7 +269,7 @@ an argument and appending the output to the `ui`.
 
 To use Mux.jl to serve the web-page we can simple do:
 
-```jl
+```julia
 ]add Mux
 
 using Mux

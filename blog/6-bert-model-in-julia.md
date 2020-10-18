@@ -132,7 +132,7 @@ You can find entire notebook here. (No link, will publish it after GCI).
 
 First, lets get all of the packages imported
 
-```jl
+```julia
 using CuArrays
 
 using Transformers
@@ -149,7 +149,7 @@ using WordTokenizers
 
 Also, some constants we'll be using:
 
-```jl
+```julia
 const labels = ("0", "1")
 const opt = ADAM(1e-6)
 const Batch = 2
@@ -162,7 +162,7 @@ would mean that there will be a single iteration of weights update.
 Now, lets get the pretrained model. Here the downloading extracting the model
 will be taken care of by Transformers. All you need to do is following.
 
-```jl
+```julia
 const _bert_model, wordpiece, tokenizer = pretrain"Bert-uncased_L-12_H-768_A-12"
 ```
 
@@ -178,7 +178,7 @@ You might need to type `Y` as stdin. Alternatively, you can set
 We need to first clean the data before we could use it. We can do this by using
 TextAnalysis.jl package.
 
-```jl
+```julia
 using TextAnalysis
 
 function preprocess_data()
@@ -212,7 +212,7 @@ that we don't require.
 To prepare it the way we require, we would need to add few more functions. This
 will create an iterator like object for our data.
 
-```jl
+```julia
 using DelimitedFiles
 
 function gen_train()
@@ -223,7 +223,7 @@ end
 datas = gen_train() # This will be used in the `train!()` function
 ```
 
-```jl
+```julia
 const vocab = Vocabulary(wordpiece)
 
 markline(sent) = ["[CLS]"; sent; "[SEP]"]
@@ -247,7 +247,7 @@ different output. We'd be defining the `get_batch` function as well as the
 datas. Here, datas represent the training or testing data we will be using
 in this model.
 
-```jl
+```julia
 function get_batch(c::Channel, n=1)
     res = Vector(undef, n)
     for (i, x) ∈ enumerate(c)
@@ -262,7 +262,7 @@ end
 
 First, lets define the `bert_model` and the `clf`.
 
-```jl
+```julia
 const clf = gpu(Chain(
         Dropout(0.1),
         Dense(size(_bert_model.classifier.pooler.W, 1), length(labels)),
@@ -281,7 +281,7 @@ const bert_model = gpu(
 
 We'd be calculating the log cross entropy loss through the loss function:
 
-```jl
+```julia
 function loss(data, label, mask=nothing)
     e = bert_model.embed(data)
     t = bert_model.transformers(e, mask)
@@ -299,7 +299,7 @@ end
 
 Finally, lets define the `train!()` fucntion
 
-```jl
+```julia
 function train!()
     global Batch
     global Epoch
@@ -329,7 +329,7 @@ end
 
 After looping through all of the data, we will move towards testing it:
 
-```jl
+```julia
 function test()
     Flux.testmode!(bert_model)
     i = 1
