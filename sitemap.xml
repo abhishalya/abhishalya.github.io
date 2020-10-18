@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+    <loc>https://abhishalya.tech/blog/1-start-of-the-year/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/5-zero-indexing-in-julia/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/6-bert-model-in-julia/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/404/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/2-long-contest-discussion/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/4-julia-1-indexing/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/7-deploy-web-apps-julia-heroku/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/8-interact-apps/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/9-new-blog/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/blog/3-codechef-div-1/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://abhishalya.tech/projects/index.html</loc>
+    <lastmod>2020-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+</urlset>

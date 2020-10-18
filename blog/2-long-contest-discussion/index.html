@@ -1,0 +1,82 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=icon  href="/assets/favicon.ico"> <title>Long challenge problem discussion</title> <header> <a class=title  href="/"><h2>@abhishalya</h2></a> <nav> <a href="/">Home</a> / <a href="/blog">Blog</a> / <a href="/projects">Projects</a> </nav> </header> <main> <div class=container ><p>So finally, long challenge is over which to be honest wasn&#39;t very long for me. I only did 4 problems after which I lost the interest in solving problems. I prefer the problems that are short and has a good logic or something that is worth thinking about. So here are my discussions on the problems that I solved or at-least read. &#40;I&#39;m talking about the Div. 2 here, btw&#41;.</p> <h1 id=fancy_quotes_-_fancy ><a href="#fancy_quotes_-_fancy">Fancy Quotes - FANCY</a></h1> <p>This was the first problem of the Div. 2 and as expected it was a pure cakewalk. The only thing needed here was implementation and honestly I think the code is way simpler in Python than any other language.</p> <p>Here is my code which is sweet and short ;&#41;</p> <pre><code class="py hljs">t = <span class=hljs-built_in >int</span>(<span class=hljs-built_in >input</span>())
+<span class=hljs-keyword >while</span> t:
+    s = <span class=hljs-built_in >input</span>()
+    <span class=hljs-keyword >if</span> <span class=hljs-string >&#x27;not&#x27;</span> <span class=hljs-keyword >in</span> s.split():
+        print(<span class=hljs-string >&#x27;Real Fancy&#x27;</span>)
+    <span class=hljs-keyword >else</span>:
+        print(<span class=hljs-string >&#x27;regularly fancy&#x27;</span>)
+    t -= <span class=hljs-number >1</span></code></pre> <p>I hope the solution is very clear if one has understood the problem. I solved it in few minutes and moved on to the next problem.</p> <h1 id=lucky_number_game_-_hp18 ><a href="#lucky_number_game_-_hp18">Lucky Number Game - HP18</a></h1> <p>This problem was easy, but the wording was WRONG&#33;</p> <p>I mean it, here is what was wrong with the statement.</p> <blockquote> <p>The players alternate turns. In each turn, the current player must remove <code>a</code> non-zero number of elements from the sequence</p> </blockquote> <p>That <code>a</code> made me mad because the first time I read this, I read it like we have to remove a single non-zero element for a turn. Hence I was producing multiple WAs on submitting. As soon as I fixed the issue, the problem was solved.</p> <p>There was nothing much other than the implementation for the problem, just a better statement is always nice to have.</p> <p>Here is my code if you are interested:</p> <pre><code class="cpp hljs"><span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;bits/stdc++.h&gt;</span></span>
+<span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> <span class=hljs-built_in >std</span>;
+
+<span class=hljs-function ><span class=hljs-keyword >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span> </span>{
+  <span class=hljs-keyword >int</span> t; <span class=hljs-built_in >cin</span> &gt;&gt; t;
+  <span class=hljs-keyword >while</span>(t--) {
+    <span class=hljs-keyword >int</span> n, a, b;
+    <span class=hljs-built_in >cin</span> &gt;&gt; n &gt;&gt; a &gt;&gt; b;
+    <span class=hljs-keyword >int</span> ca = <span class=hljs-number >0</span>, cb = <span class=hljs-number >0</span>, cc = <span class=hljs-number >0</span>;
+    <span class=hljs-keyword >for</span>(<span class=hljs-keyword >int</span> i = <span class=hljs-number >0</span>; i &lt; n; i++) {
+      <span class=hljs-keyword >int</span> x; <span class=hljs-built_in >cin</span> &gt;&gt; x;
+      <span class=hljs-keyword >if</span>(x % a == <span class=hljs-number >0</span> &amp;&amp; x % b == <span class=hljs-number >0</span>) cc++;
+      <span class=hljs-keyword >else</span> <span class=hljs-keyword >if</span>(x % a == <span class=hljs-number >0</span>) cb++;
+      <span class=hljs-keyword >else</span> <span class=hljs-keyword >if</span>(x % b == <span class=hljs-number >0</span>) ca++;
+    }
+    <span class=hljs-keyword >if</span>(cb &gt;= ca) {
+      <span class=hljs-keyword >if</span>(cc) <span class=hljs-built_in >cout</span> &lt;&lt; <span class=hljs-string >&quot;BOB\n&quot;</span>;
+      <span class=hljs-keyword >else</span> <span class=hljs-built_in >cout</span> &lt;&lt; <span class=hljs-string >&quot;ALICE\n&quot;</span>;
+    } <span class=hljs-keyword >else</span> {
+      <span class=hljs-built_in >cout</span> &lt;&lt; <span class=hljs-string >&quot;ALICE\n&quot;</span>;
+    }
+  }
+  <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>;
+}</code></pre> <p>I try to keep my codes short but readble and clean at the same time. Let me know if I can improve somewhere.</p> <h1 id=distinct_pairs_-_dpairs ><a href="#distinct_pairs_-_dpairs">Distinct Pairs - DPAIRS</a></h1> <p>Honestly I didn&#39;t know how my solution worked. The problem was simple, basic implementation and it should produce you an AC. I think that this problem was nice and much better than the previous two compared to their difficulty. It took me some time to land upon the required observation of producing the pairs.</p> <blockquote> <p>Hint: If you are in the middle of solving this problem then think the number</p> </blockquote> <p>of pairs you have to print. You can get the idea of how your solution needs to be.</p> <p>This is my code for the problem, I&#39;m pretty sure the author has the same solution for this problem.</p> <pre><code class="cpp hljs"><span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;bits/stdc++.h&gt;</span></span>
+<span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> <span class=hljs-built_in >std</span>;
+
+<span class=hljs-function ><span class=hljs-keyword >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span> </span>{
+  <span class=hljs-keyword >int</span> n, m;
+  <span class=hljs-built_in >cin</span> &gt;&gt; n &gt;&gt; m;
+  <span class=hljs-keyword >int</span> a[n], b[m];
+  <span class=hljs-keyword >int</span> mn = INT_MAX, mx = INT_MIN;
+  <span class=hljs-keyword >int</span> mni, mxi;
+  <span class=hljs-keyword >for</span>(<span class=hljs-keyword >int</span> i = <span class=hljs-number >0</span>; i &lt; n; i++) {
+    <span class=hljs-built_in >cin</span> &gt;&gt; a[i];
+    <span class=hljs-keyword >if</span>(a[i] &lt; mn) {
+      mn = a[i];
+      mni = i;
+    }
+  }
+  <span class=hljs-keyword >for</span>(<span class=hljs-keyword >int</span> i = <span class=hljs-number >0</span>; i &lt; m; i++) {
+    <span class=hljs-built_in >cin</span> &gt;&gt; b[i];
+    <span class=hljs-keyword >if</span>(b[i] &gt; mx) {
+      mx = b[i];
+      mxi = i;
+    }
+  }
+  <span class=hljs-keyword >for</span>(<span class=hljs-keyword >int</span> i = <span class=hljs-number >0</span>; i &lt; n; i++) {
+    <span class=hljs-keyword >if</span>(i != mni) {
+      <span class=hljs-built_in >cout</span> &lt;&lt; i &lt;&lt; <span class=hljs-string >&quot; &quot;</span> &lt;&lt; mxi &lt;&lt; <span class=hljs-built_in >endl</span>;
+    }
+  }
+  <span class=hljs-keyword >for</span>(<span class=hljs-keyword >int</span> i = <span class=hljs-number >0</span>; i &lt; m; i++) {
+    <span class=hljs-built_in >cout</span> &lt;&lt; mni &lt;&lt; <span class=hljs-string >&quot; &quot;</span> &lt;&lt; i &lt;&lt; <span class=hljs-built_in >endl</span>;
+  }
+  <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>;
+}</code></pre> <h1 id=chef_and_modulo_game_-_mgame ><a href="#chef_and_modulo_game_-_mgame">Chef and Modulo Game - MGAME</a></h1> <p>Okay, this was the last and probably the most interesting problem I solved during the long challenge.</p> <p>The problem was very clear and had some interesting observations. Basic required thing was the definition of <code>modulo &#40;&#37;&#41;</code> operation. Once you split the problem into basic parts the solution gets clearer and clearer.</p> <p>I liked this problem and it took me some time to arrive at the solution.</p> <p>Here is my code for the same:</p> <pre><code class="cpp hljs"><span class=hljs-meta >#<span class=hljs-meta-keyword >include</span> <span class=hljs-meta-string >&lt;bits/stdc++.h&gt;</span></span>
+<span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> <span class=hljs-built_in >std</span>;
+
+<span class=hljs-function ><span class=hljs-keyword >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span> </span>{
+  <span class=hljs-keyword >int</span> t; <span class=hljs-built_in >cin</span> &gt;&gt; t;
+  <span class=hljs-keyword >while</span>(t--) {
+    <span class=hljs-keyword >int</span> n, p, mx; <span class=hljs-built_in >cin</span> &gt;&gt; n &gt;&gt; p;
+    <span class=hljs-keyword >if</span>(n % <span class=hljs-number >2</span> == <span class=hljs-number >0</span>) mx = n / <span class=hljs-number >2</span> - <span class=hljs-number >1</span>;
+    <span class=hljs-keyword >else</span> mx = n / <span class=hljs-number >2</span>;
+    <span class=hljs-keyword >long</span> <span class=hljs-keyword >long</span> ans;
+    <span class=hljs-keyword >if</span>(mx == <span class=hljs-number >0</span>) {
+      <span class=hljs-keyword >int</span> x = (n == <span class=hljs-number >1</span>) ? <span class=hljs-number >1</span> : <span class=hljs-number >2</span>;
+      ans = <span class=hljs-number >1L</span>L * x * p * p + <span class=hljs-number >1L</span>L * (p - x) * p * x + <span class=hljs-number >1L</span>L * (p - x) * (p - x) * x + <span class=hljs-number >1L</span>L * (p - x) * (p - x) * (p - x);
+    } <span class=hljs-keyword >else</span> {
+      ans = <span class=hljs-number >1L</span>L * (p - mx) * (p - mx) + <span class=hljs-number >1L</span>L * (p - n) * (p - mx) + <span class=hljs-number >1L</span>L * (p - n) * (p - n);
+    }
+    <span class=hljs-built_in >cout</span> &lt;&lt; ans &lt;&lt; <span class=hljs-built_in >endl</span>;
+  }
+  <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>;
+}</code></pre> <p>If you are in doubt of any solution you can mail me, or leave an issue at <a href="https://github.com/abhishalya/MyCPCodes">MyCPCodes</a> where I keep my codes updated.</p> <p>So this was it, I liked the problem set and it is always fun to upsolve the long contest problems because of their sheer difficulty.</p> <p>I will update this post if I solved the remaining problems.</p> <p>Happy coding&#33;</p> </div> </main> </div> <footer> &copy; Abhinav Kaushlya. Made with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </footer>
