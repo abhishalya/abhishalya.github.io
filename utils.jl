@@ -10,9 +10,21 @@ function hfun_blogposts()
     curyear = year(today)
     curmonth = month(today)
     curday = day(today)
+
     list = readdir("blog")
-    reverse!(list)
     filter!(f -> endswith(f, ".md"), list)
+    sorter(p) = begin
+        ps  = splitext(p)[1]
+        url = "/blog/$ps/"
+        surl = strip(url, '/')
+        pubdate = pagevar(surl, :published)
+        if isnothing(pubdate)
+            return Date(Dates.unix2datetime(stat(surl * ".md").ctime))
+        end
+        return Date(pubdate, dateformat"d U Y")
+    end
+    sort!(list, by=sorter, rev=true)
+
     io = IOBuffer()
     write(io, """<ul class="blog-posts">""")
     for (i, post) in enumerate(list)
