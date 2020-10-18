@@ -33,7 +33,7 @@ To wrap it in two cases:
 The array is quite large and he mistakenly writes `0:n` instead of `0:n-1`
 considering 0-based indexing and `n` being the number of elements in the array.
 He waited for program to finish; Found out an error at last point:
-```Array Index out of bound!```
+`Array Index out of bound!`.
 Finds himself 1-based indexing to be much better.
 
 2. Another person writing some program has a habit of using 0-based indexing.
