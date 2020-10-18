@@ -1,132 +1,132 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=icon  href="/assets/favicon.ico"> <title>Developing apps using Interact.jl</title> <header> <a class=title  href="/"><h2>@abhishalya</h2></a> <nav> <a href="/">Home</a> / <a href="/blog">Blog</a> / <a href="/projects">Projects</a> </nav> </header> <main> <div class=container ><p>I think many of you might think that it is quite impossible or hard to develop a web-app in Julia. Well, you are wrong&#33; Developing a web-app using Julia is very much possible and is easy too. This post will give you a brief guide to how you can develop you apps using <a href="https://github.com/JuliaGizmos/Interact.jl">Interact.jl</a> and <a href="https://github.com/JuliaGizmos/WebIO.jl">WebIO</a>. This blog post is also a submission to one of my Google Code-in tasks at Julia.</p> <h2 id=where_are_the_docs ><a href="#where_are_the_docs">Where are the docs?</a></h2> <p>Well, Interact is a great package but one of the things it lacks is the proper documentation and examples which are really important which you try to build your own app. The existing documentation is probably only good enough for widgets but many of the functions are missing there. One of the reason is Interact is build upon WebIO, CSSUtil and other packages where each one has its own documentation. So if you don&#39;t find something in Interact chances are it will be somewhere else. Just doing a Github search would get you to the source :P</p> <p>But hopefully, this post will give you all the basics you&#39;ll need to know in order to successfully develop your app at one place. This might not cover all there is but this should at least get you started.</p> <h2 id=getting_started ><a href="#getting_started">Getting Started</a></h2> <p>Before we move on to using these packages, we first need to make sure we have everything we need.</p> <p>Interact works with the following frontends:</p> <ul> <li><p><a href="http://junolab.org/">Juno</a> - A flexible IDE for the 21st century</p> <li><p><a href="https://github.com/JuliaLang/IJulia.jl">IJulia</a> - Jupyter notebooks</p> </ul> <p>&#40;and Jupyter Lab&#41; for Julia</p> <ul> <li><p><a href="https://github.com/JunoLab/Blink.jl">Blink</a> - An Electron wrapper you can</p> </ul> <p>use to make Desktop apps</p> <ul> <li><p><a href="https://github.com/JuliaWeb/Mux.jl">Mux</a> - A web server framework</p> </ul> <p>You can use any one of these. I&#39;ll be working with IJulia and Mux here.</p> <p>For IJulia, you need to make sure you have Jupyter notebook installed along with nbextensions.</p> <p>You can just do:</p> <pre><code class=language-julia >pip3 install jupyterlab --user</code></pre>
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/ocean.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=icon  href="/assets/favicon.ico"> <title>Developing apps using Interact.jl</title> <header> <a class=title  href="/"><h2>@abhishalya</h2></a> <nav> <a href="/">Home</a> / <a href="/blog">Blog</a> / <a href="/projects">Projects</a> </nav> </header> <main> <div class=container ><p>I think many of you might think that it is quite impossible or hard to develop a web-app in Julia. Well, you are wrong&#33; Developing a web-app using Julia is very much possible and is easy too. This post will give you a brief guide to how you can develop you apps using <a href="https://github.com/JuliaGizmos/Interact.jl">Interact.jl</a> and <a href="https://github.com/JuliaGizmos/WebIO.jl">WebIO</a>. This blog post is also a submission to one of my Google Code-in tasks at Julia.</p> <h2 id=where_are_the_docs ><a href="#where_are_the_docs">Where are the docs?</a></h2> <p>Well, Interact is a great package but one of the things it lacks is the proper documentation and examples which are really important which you try to build your own app. The existing documentation is probably only good enough for widgets but many of the functions are missing there. One of the reason is Interact is build upon WebIO, CSSUtil and other packages where each one has its own documentation. So if you don&#39;t find something in Interact chances are it will be somewhere else. Just doing a Github search would get you to the source :P</p> <p>But hopefully, this post will give you all the basics you&#39;ll need to know in order to successfully develop your app at one place. This might not cover all there is but this should at least get you started.</p> <h2 id=getting_started ><a href="#getting_started">Getting Started</a></h2> <p>Before we move on to using these packages, we first need to make sure we have everything we need.</p> <p>Interact works with the following frontends:</p> <ul> <li><p><a href="http://junolab.org/">Juno</a> - A flexible IDE for the 21st century</p> <li><p><a href="https://github.com/JuliaLang/IJulia.jl">IJulia</a> - Jupyter notebooks</p> </ul> <p>&#40;and Jupyter Lab&#41; for Julia</p> <ul> <li><p><a href="https://github.com/JunoLab/Blink.jl">Blink</a> - An Electron wrapper you can</p> </ul> <p>use to make Desktop apps</p> <ul> <li><p><a href="https://github.com/JuliaWeb/Mux.jl">Mux</a> - A web server framework</p> </ul> <p>You can use any one of these. I&#39;ll be working with IJulia and Mux here.</p> <p>For IJulia, you need to make sure you have Jupyter notebook installed along with nbextensions.</p> <p>You can just do:</p> <pre><code class="julia hljs">pip3 install jupyterlab --user</code></pre>
 <p>I avoid using <code>sudo pip</code> and you should too in my opinion.</p>
 <p>Next, install the nbextensions</p>
-<pre><code class=language-julia >pip3 install jupyter_contrib_nbextensions
+<pre><code class="julia hljs">pip3 install jupyter_contrib_nbextensions
 jupyter contrib nbextension install</code></pre>
 <p>And finally install the WebIO Jupyter notebook extension in REPL:</p>
-<pre><code class=language-julia >julia&gt; &#93;
-&#40;v1.3&#41; pkg&gt; add WebIO</code></pre>
-<pre><code class=language-jl >using WebIO
-WebIO.install_jupyter_nbextension&#40;&#41;</code></pre>
+<pre><code class="julia hljs">julia&gt; ]
+(v1<span class=hljs-number >.3</span>) pkg&gt; add WebIO</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> WebIO
+WebIO.install_jupyter_nbextension()</code></pre>
 <p>Now if everything is goes fine, you can move towards next step.</p>
 <h2 id=interactjl_-_an_example ><a href="#interactjl_-_an_example">Interact.jl - An example</a></h2>
 <p>Interact provides a <a href="https://juliagizmos.github.io/Interact.jl/latest/widgets/">set of widgets</a> you can include in your app. Also, you can create you own <a href="https://juliagizmos.github.io/Interact.jl/latest/custom_widgets/">custom widgets</a> if you want to. Here we will only focus on the available widgets.</p>
 <p>So, here we will be trying to replicate the UI of the <a href="http://app.juliadiffeq.org/sde">DiffEqOnline</a> app. We can see that the UI contains text input fields, numerical inputs and a dropdown menu. All of which we can implement using the available widgets of Interact as follows:</p>
-<pre><code class=language-jl ># Textarea for the input equations &#40;for multiline input&#41;
-input_eqn &#61; Widgets.textarea&#40;label &#61; &quot;Enter the system of differential equations here:&quot;,
-                             value &#61; &quot;dx &#61; a*x - b*x*y\ndy &#61; -c*y &#43; d*x*y&quot;&#41;
+<pre><code class="julia hljs"><span class=hljs-comment ># Textarea for the input equations (for multiline input)</span>
+input_eqn = Widgets.textarea(label = <span class=hljs-string >&quot;Enter the system of differential equations here:&quot;</span>,
+                             value = <span class=hljs-string >&quot;dx = a*x - b*x*y\ndy = -c*y + d*x*y&quot;</span>)
 
-# Textbox for the input parameters
-input_param &#61; Widgets.textbox&#40;label &#61; &quot;Parameters:&quot;,
-                              value &#61; &quot;a&#61;1.5, b&#61;1, c&#61;3, d&#61;1&quot;&#41;
+<span class=hljs-comment ># Textbox for the input parameters</span>
+input_param = Widgets.textbox(label = <span class=hljs-string >&quot;Parameters:&quot;</span>,
+                              value = <span class=hljs-string >&quot;a=1.5, b=1, c=3, d=1&quot;</span>)
 
-# Textarea for input noise &#40;for multiline input&#41;
-input_noise &#61; Widgets.textarea&#40;label &#61; &quot;Input the noise function here:&quot;,
-                               value &#61; &quot;dx &#61; a*x\ndy &#61; a*y&quot;&#41;
+<span class=hljs-comment ># Textarea for input noise (for multiline input)</span>
+input_noise = Widgets.textarea(label = <span class=hljs-string >&quot;Input the noise function here:&quot;</span>,
+                               value = <span class=hljs-string >&quot;dx = a*x\ndy = a*y&quot;</span>)
 
-# Textbox for the noise parameters
-noise_param &#61; Widgets.textbox&#40;label &#61; &quot;Noise parameters:&quot;,
-                              value &#61; &quot;a&#61;0.25&quot;&#41;
+<span class=hljs-comment ># Textbox for the noise parameters</span>
+noise_param = Widgets.textbox(label = <span class=hljs-string >&quot;Noise parameters:&quot;</span>,
+                              value = <span class=hljs-string >&quot;a=0.25&quot;</span>)
 
-# Since we only accept numerical values for the time span we can
-# use the spinbox. &#40;we can also specify the range for spinboxes&#41;
-time_span_1 &#61; Widgets.spinbox&#40;label &#61; &quot;Time span:&quot;, value &#61; 0&#41;
-time_span_2 &#61; Widgets.spinbox&#40;value &#61; 10&#41;
+<span class=hljs-comment ># Since we only accept numerical values for the time span we can</span>
+<span class=hljs-comment ># use the spinbox. (we can also specify the range for spinboxes)</span>
+time_span_1 = Widgets.spinbox(label = <span class=hljs-string >&quot;Time span:&quot;</span>, value = <span class=hljs-number >0</span>)
+time_span_2 = Widgets.spinbox(value = <span class=hljs-number >10</span>)
 
-# Textbox for the initial conditions
-initial_cond &#61; Widgets.textbox&#40;label &#61; &quot;Initial conditions:&quot;,
-                               value &#61; &quot;1.0, 1.0&quot;&#41;
+<span class=hljs-comment ># Textbox for the initial conditions</span>
+initial_cond = Widgets.textbox(label = <span class=hljs-string >&quot;Initial conditions:&quot;</span>,
+                               value = <span class=hljs-string >&quot;1.0, 1.0&quot;</span>)
 
-# Textbox for the plotting variables
-plotting_var &#61; Widgets.textbox&#40;label &#61; &quot;Plotting variables&quot;,
-                               value &#61; &quot;&#91;:x, :y&#93;&quot;&#41;
+<span class=hljs-comment ># Textbox for the plotting variables</span>
+plotting_var = Widgets.textbox(label = <span class=hljs-string >&quot;Plotting variables&quot;</span>,
+                               value = <span class=hljs-string >&quot;[:x, :y]&quot;</span>)
 
-# To create a dropdown menu, we need a dict with the keys and associated values
-# to select the options within it.
-dict &#61; Dict&#40;&quot;SRIW1: Rossler&#39;s Strong Order 1.5 SRIW1 method&quot; &#61;&gt; 1,
-            &quot;SRA1: Rossler&#39;s Strong Order 2.0 SRA1 method &#40;for additive noise&#41;&quot; &#61;&gt; 2&#41;
+<span class=hljs-comment ># To create a dropdown menu, we need a dict with the keys and associated values</span>
+<span class=hljs-comment ># to select the options within it.</span>
+dict = <span class=hljs-built_in >Dict</span>(<span class=hljs-string >&quot;SRIW1: Rossler&#x27;s Strong Order 1.5 SRIW1 method&quot;</span> =&gt; <span class=hljs-number >1</span>,
+            <span class=hljs-string >&quot;SRA1: Rossler&#x27;s Strong Order 2.0 SRA1 method (for additive noise)&quot;</span> =&gt; <span class=hljs-number >2</span>)
 
-plotting_var &#61; Widgets.dropdown&#40;label &#61; &quot;Solver:&quot;, dict, value &#61; 2&#41;
+plotting_var = Widgets.dropdown(label = <span class=hljs-string >&quot;Solver:&quot;</span>, dict, value = <span class=hljs-number >2</span>)
 
-# Textbox for the graph name
-graph_title &#61; Widgets.textbox&#40;label &#61; &quot;Graph title:&quot;,
-                              value &#61; &quot;Stochastic Lotka-Volterra Equation&quot;&#41;
+<span class=hljs-comment ># Textbox for the graph name</span>
+graph_title = Widgets.textbox(label = <span class=hljs-string >&quot;Graph title:&quot;</span>,
+                              value = <span class=hljs-string >&quot;Stochastic Lotka-Volterra Equation&quot;</span>)
 
-# Creates a button with name &quot;Solve it&quot;
-solve_but &#61; button&#40;&quot;Solve it&quot;&#41;</code></pre>
+<span class=hljs-comment ># Creates a button with name &quot;Solve it&quot;</span>
+solve_but = button(<span class=hljs-string >&quot;Solve it&quot;</span>)</code></pre>
 <p>Now, since we&#39;ve got all the elements we needed, we can just create a UI element by stacking them over one another.</p>
 <p>We&#39;ll use <code>vbox</code> to vertically stack all the elements. You can use <code>hbox</code> to horizontally stack elements. Also, to make it look better we will append a horizontal line between each element and a vertical margin of 20px using <code>hline&#40;&#41;</code> and <code>vskip&#40;20px&#41;</code> respectively.</p>
 <p>So, the final result should be something like this:</p>
-<pre><code class=language-jl >ui &#61; vbox&#40;vskip&#40;20px&#41;, input_eqn, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, input_param, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, input_noise, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, noise_param, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, time_hor, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, initial_cond, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, plotting_var, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, graph_title, vskip&#40;20px&#41;, hline&#40;&#41;,
-          vskip&#40;20px&#41;, solve_but&#41;</code></pre>
+<pre><code class="julia hljs">ui = vbox(vskip(<span class=hljs-number >20</span>px), input_eqn, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), input_param, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), input_noise, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), noise_param, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), time_hor, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), initial_cond, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), plotting_var, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), graph_title, vskip(<span class=hljs-number >20</span>px), hline(),
+          vskip(<span class=hljs-number >20</span>px), solve_but)</code></pre>
 <p>Now, if you&#39;re running all this code you&#39;d see that the elements are already styled. This is because Interact uses &#39;Bulma&#39; CSS for the styling. We can modify this, but it is a topic for some other post.</p>
 <p>So far we&#39;ve got the user-interface we needed. Now, how to record the values and work with them. To understand that, we&#39;ll need to understand what  are <code>Observables</code>.</p>
 <h2 id=observables ><a href="#observables">Observables</a></h2>
 <p>Observables are like <code>Ref</code>s but you can listen to changes.</p>
 <p>As an example:</p>
-<pre><code class=language-jl >using Observables
-obv &#61; Observable&#40;0&#41;
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> Observables
+obv = Observable(<span class=hljs-number >0</span>)
 
-on&#40;obv&#41; do val
-    println&#40;&quot;Value changed to: &quot;, val&#41;
-end</code></pre>
+on(obv) <span class=hljs-keyword >do</span> val
+    println(<span class=hljs-string >&quot;Value changed to: &quot;</span>, val)
+<span class=hljs-keyword >end</span></code></pre>
 <p>So if we do:</p>
-<pre><code class=language-julia >obv&#91;&#93; &#61; 10</code></pre>
+<pre><code class="julia hljs">obv[] = <span class=hljs-number >10</span></code></pre>
 <p>Then the output will be:</p>
-<pre><code class=language-julia >Value changed to: 10</code></pre>
+<pre><code class="julia hljs">Value changed to: <span class=hljs-number >10</span></code></pre>
 <p>So, for the above example we need to construct an observable for each of the elements we just created. I&#39;ll define a new function <code>make_observable</code> to do this. But before that let&#39;s define a scope object to enclose the observables.</p>
-<pre><code class=language-jl >scope &#61; Scope&#40;&#41;</code></pre>
+<pre><code class="julia hljs">scope = Scope()</code></pre>
 <p>A <code>Scope</code> acts as a medium for bidirectional communication between Julia and JavaScript. The primary method of communication is <code>Observables</code> which are essentially wrappers around values that may change over time. A <code>Scope</code> may contain several observables whose values can be updated and read from either JavaScript or Julia.</p>
 <p>So the <code>make_oservable</code> function will rely on a unique key which we will provide for each of the elements we just constructed. So, in order to do that, we will set an Observable object to each of the elements&#39; value. What this will do is, it will record the values of each of these elements. And we will trigger the function which we want to run &#40;the work to be done on the given values&#41; on a click of the <code>solve_but</code>.</p>
 <p>So, to do this we might do something like this:</p>
-<pre><code class=language-jl >function makeobservable&#40;key, val &#61; get&#40;dict, key, nothing&#41;&#41;
-    scope&#91;key&#93; &#61; Observable&#123;Any&#125;&#40;val&#41;
-end
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> makeobservable(key, val = get(dict, key, <span class=hljs-literal >nothing</span>))
+    scope[key] = Observable{<span class=hljs-built_in >Any</span>}(val)
+<span class=hljs-keyword >end</span>
 
-input_eqn &#61; Widgets.textarea&#40;label &#61; &quot;Enter the system of differential equations here:&quot;,
-                             value &#61; makeobservable&#40;&quot;input_eqn&quot;&#41;&#41;
+input_eqn = Widgets.textarea(label = <span class=hljs-string >&quot;Enter the system of differential equations here:&quot;</span>,
+                             value = makeobservable(<span class=hljs-string >&quot;input_eqn&quot;</span>))
 
-input_param  &#61; Widgets.textbox&#40;label &#61; &quot;Parameters:&quot;,
-                               value &#61; makeobservable&#40;&quot;input_param&quot;&#41;&#41;
+input_param  = Widgets.textbox(label = <span class=hljs-string >&quot;Parameters:&quot;</span>,
+                               value = makeobservable(<span class=hljs-string >&quot;input_param&quot;</span>))
 
-input_noise  &#61; Widgets.textarea&#40;label &#61; &quot;Input the noise function here:&quot;,
-                                value &#61; makeobservable&#40;&quot;input_noise&quot;&#41;&#41;
+input_noise  = Widgets.textarea(label = <span class=hljs-string >&quot;Input the noise function here:&quot;</span>,
+                                value = makeobservable(<span class=hljs-string >&quot;input_noise&quot;</span>))
 
-# Do this for all elements in a similar way</code></pre>
+<span class=hljs-comment ># Do this for all elements in a similar way</span></code></pre>
 <p>Finally, for the button we need an observable for counting clicks. We can do that like this:</p>
-<pre><code class=language-jl >clicks &#61; scope&#91;&quot;clicks&quot;&#93; &#61; Observable&#123;Any&#125;&#40;0&#41;</code></pre>
+<pre><code class="julia hljs">clicks = scope[<span class=hljs-string >&quot;clicks&quot;</span>] = Observable{<span class=hljs-built_in >Any</span>}(<span class=hljs-number >0</span>)</code></pre>
 <p>Now, we need to provide some initial data for all of the elements. So, we will construct a dict with the keys for each of the element and values set to the initial values of their corresponding elements.</p>
-<pre><code class=language-jl >const init_dict &#61; Dict&#40;
-    &quot;input_eqn&quot; &#61;&gt;&quot;dx &#61; a*x - b*x*y\ndy &#61; -c*y &#43; d*x*y&quot;,
-    &quot;input_param&quot; &#61;&gt;&quot;a&#61;1.5, b&#61;1, c&#61;3, d&#61;1&quot;,
-    &quot;input_noise&quot; &#61;&gt; &quot;dx &#61; a*x\ndy &#61; a*y&quot;,
-    &quot;noise_param&quot; &#61;&gt; &quot;a&#61;0.25&quot;,
-    &quot;time_span_1&quot; &#61;&gt; 0,
-    &quot;time_span_2&quot; &#61;&gt; 10,
-    &quot;initial_cond&quot; &#61;&gt; &quot;1.0, 1.0&quot;,
-    &quot;plotting_var&quot; &#61;&gt; &quot;&#91;:x, :y&#93;&quot;,
-    &quot;solver&quot; &#61;&gt; 1,
-    &quot;graph_title&quot; &#61;&gt; &quot;Stochastic Lotka-Volterra Equation&quot;,
-&#41;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >const</span> init_dict = <span class=hljs-built_in >Dict</span>(
+    <span class=hljs-string >&quot;input_eqn&quot;</span> =&gt;<span class=hljs-string >&quot;dx = a*x - b*x*y\ndy = -c*y + d*x*y&quot;</span>,
+    <span class=hljs-string >&quot;input_param&quot;</span> =&gt;<span class=hljs-string >&quot;a=1.5, b=1, c=3, d=1&quot;</span>,
+    <span class=hljs-string >&quot;input_noise&quot;</span> =&gt; <span class=hljs-string >&quot;dx = a*x\ndy = a*y&quot;</span>,
+    <span class=hljs-string >&quot;noise_param&quot;</span> =&gt; <span class=hljs-string >&quot;a=0.25&quot;</span>,
+    <span class=hljs-string >&quot;time_span_1&quot;</span> =&gt; <span class=hljs-number >0</span>,
+    <span class=hljs-string >&quot;time_span_2&quot;</span> =&gt; <span class=hljs-number >10</span>,
+    <span class=hljs-string >&quot;initial_cond&quot;</span> =&gt; <span class=hljs-string >&quot;1.0, 1.0&quot;</span>,
+    <span class=hljs-string >&quot;plotting_var&quot;</span> =&gt; <span class=hljs-string >&quot;[:x, :y]&quot;</span>,
+    <span class=hljs-string >&quot;solver&quot;</span> =&gt; <span class=hljs-number >1</span>,
+    <span class=hljs-string >&quot;graph_title&quot;</span> =&gt; <span class=hljs-string >&quot;Stochastic Lotka-Volterra Equation&quot;</span>,
+)</code></pre>
 <p>Finally, we will construct a dict containing all of the form input elements like this:</p>
-<pre><code class=language-jl >form_input &#61; Observable&#123;Dict&#125;&#40;dict&#41;
-form_input &#61; makeobservable&#40;&quot;form_input&quot;, init_dict&#41;</code></pre>
+<pre><code class="julia hljs">form_input = Observable{<span class=hljs-built_in >Dict</span>}(dict)
+form_input = makeobservable(<span class=hljs-string >&quot;form_input&quot;</span>, init_dict)</code></pre>
 <p>Finally to update the <code>form_input</code> on the click, we can do something like this:</p>
-<pre><code class=language-jl >form_contents &#61; Dict&#40;key&#61;&gt; @js &#36;&#40;scope&#91;key&#93;&#41;&#91;&#93; for key in keys&#40;init_dict&#41;&#41;
-onjs&#40;clicks, @js &#40;&#41; -&gt;&#36;form_input&#91;&#93; &#61; &#36;form_contents&#41;</code></pre>
+<pre><code class="julia hljs">form_contents = <span class=hljs-built_in >Dict</span>(key=&gt; <span class=hljs-meta >@js</span> $(scope[key])[] <span class=hljs-keyword >for</span> key <span class=hljs-keyword >in</span> keys(init_dict))
+onjs(clicks, <span class=hljs-meta >@js</span> () -&gt;$form_input[] = $form_contents)</code></pre>
 <p>We will call the function we want to work with by sending the <code>form_input</code> as an argument and appending the output to the <code>ui</code>.</p>
 <p>To use Mux.jl to serve the web-page we can simple do:</p>
-<pre><code class=language-jl >&#93;add Mux
+<pre><code class="julia hljs">]add Mux
 
-using Mux
-WebIO.webio_serve&#40;page&#40;&quot;/&quot;, req -&gt; ui&#41;, 8488&#41;</code></pre>
+<span class=hljs-keyword >using</span> Mux
+WebIO.webio_serve(page(<span class=hljs-string >&quot;/&quot;</span>, req -&gt; ui), <span class=hljs-number >8488</span>)</code></pre>
 <p>Here the number 8488 is the port number, you can use any port you want. After this you can simply open the browser and redirect to <code>localhost:8488</code> or any other port number you used and you should see the UI just created.</p>
 <p>This completes the introductory blog post on how you can create a web-app using Interact and WebIO. I hope it was helpful for you somewhat to make your own apps. You can use all of the available documentation mentioned below to get more details.</p>
 <h2 id=thanks ><a href="#thanks">Thanks</a></h2>
@@ -145,8 +145,8 @@ WebIO.webio_serve&#40;page&#40;&quot;/&quot;, req -&gt; ui&#41;, 8488&#41;</code
     </div>  
     
     
-        <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+        
+
 
     
     <footer>

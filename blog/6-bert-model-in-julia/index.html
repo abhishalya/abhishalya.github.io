@@ -1,170 +1,170 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=icon  href="/assets/favicon.ico"> <title>Using BERT for Sentiment Analysis</title> <header> <a class=title  href="/"><h2>@abhishalya</h2></a> <nav> <a href="/">Home</a> / <a href="/blog">Blog</a> / <a href="/projects">Projects</a> </nav> </header> <main> <div class=container ><p>This post is going to be a bit longer, so bear with me. I&#39;ve tried to explain everything a beginner &#40;like me&#41; can understand about the BERT model. This is also a part of submission for one of my GCI task where I was expected to train and test a dataset with BERT and use it as a classifier. There are more details in the following text.</p> <p>So, first lets get the basics out of the way:</p> <h2 id=basics ><a href="#basics">Basics</a></h2> <p>Bidirectional Encoder Representations from Transformers &#40;BERT&#41; is one of the most powerful language models right now. It was first published by Google AI in 2018 in a <a href="https://arxiv.org/pdf/1810.04805.pdf">paper</a>. The key point of BERT is to apply the bidirectional training of Transformer. At this point, you might be wondering what Transformers are, right? Well, I won&#39;t be getting deep into it so I want to recommend an <a href="https://nextjournal.com/chengchingwen/jsoc-2019-practical-implementation-of-bert-models-for-julia">excellent post by Peter Cheng</a> who has explained it in a very simple yet meaningful way. Do check it out, if you really want to know the basis of the BERT model.</p> <p>We&#39;ll now see how BERT works since this is quite important. I&#39;ll try to make it short to make it more understandable.</p> <h3 id=how_bert_works ><a href="#how_bert_works">How BERT works?</a></h3> <p>BERT makes use of Transformer, an attention mechanism that learns contextual relations between words &#40;or sub-words&#41; in a text. In its vanilla form, Transformer includes two separate mechanisms, an encoder that reads the text input and a decoder that produces a prediction for the task. Since BERT’s goal is to generate a language model, only the encoder mechanism is necessary. The detailed workings of Transformer are described in a paper by Google.</p> <p>As opposed to directional models, which read the text input sequentially &#40;left-to-right or right-to-left&#41;, the Transformer encoder reads the entire sequence of words at once. Therefore it is considered bidirectional, though it would be more accurate to say that it’s non-directional. This characteristic allows the model to learn the context of a word based on all of its surroundings &#40;left and right of the word&#41;.</p> <p>In BERT, we don&#39;t represent each word as a vector &#40;as we&#39;ve been doing since years in NLP&#41; instead we represent each &#39;subword token&#39; as a vector. That is, whenever the model finds an unknown word it tries to split the word into sub-pieces like the word root, prefixes, etc and use all the representational vectors of each sub-pieces together to represent the unfamiliar word.</p> <p><img src="../assets/images/bert-work-1.png" alt=bert-work-1  /></p> <p>Finally, we take the output of the last encder block as our final representation. We can just feed the representation of our old NLP model to BERT and get a much better performance. This means that the BERT isn&#39;t as complicated as some of the other NLP models. However, the BERT model is VERY large. As an instance, for the Aamzon Review dataset I wasn&#39;t able to train 10 reviews on my 6 GB GPU. Which I think is insane&#33; I&#39;ll get into more details in the upcoming sections.</p> <p>Well, that&#39;s for the general introduction to the BERT model. Its actually not complete, but I will mention those things over my own task to avoid redundancy in information.</p> <h2 id=what_was_my_task_and_how_i_did_it ><a href="#what_was_my_task_and_how_i_did_it">What was my task and how I did it?</a></h2> <p>My task was to train and test <a href="https://www.kaggle.com/bittlingmayer/amazonreviews">Amazon Review dataset</a> using BERT model present in <a href="https://github.com/chengchingwen/Transformers.jl">Transformers.jl</a> package.</p> <p>One of the nicest things of this task was that I was not aware of any such model. One of the key reasons of me participating and contributing to Julia was I wanted to get into Machine Learning and I wanted to learn a new language. Being introduced to such algorithms is I think one of the best things I could ever get. This task was also tagged as &#39;Advanced&#39; and while I&#39;ve completed it, I clearly understand why.</p> <p>In order to complete the task, I need to have a complete basic understanding of the model. It was a tough job, and while reading various blogs, papers, articles it was hard to process all that information. There are I think a lot of factors which I think only experienced ML people would get at first instance. I had to Google almost every new term I had discovered while reading. So, I spent time reading and understanding and after I had a basic idea, I was ready to look at the example code.</p> <p>The Transformers.jl repository already has few examples on BERT. Here we are working on Sentiment Analysis and hence we need to construct a classifier. We will now see the code and the output for the model I constructed. Its a bit long, and I won&#39;t be able to explain each and every section of the code. But, I&#39;ll cover up the important ones.</p> <h3 id=step_1_prepare_everything ><a href="#step_1_prepare_everything">Step 1: Prepare everything</a></h3> <p>First thing I believe is to prepare the data. You should download all the data files and keep them inside a folder. You&#39;d need some more files but, that would be a part of the code itself. Also, I&#39;m using IJulia to code everything out, and I would highly recommend it since it can save you a lot of time, especially if you are new to Julia.</p> <p>Also, we need to have all the dependencies installed before we move towards coding.</p> <blockquote> <p>Note: You&#39;ll need to have Julia 1.1 installed to manage the dependencies.</p> </blockquote> <p>This might change later on, but for now Transformers and its dependencies might not work on other versions.</p> <pre><code class=language-julia >julia&gt; &#93;
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/ocean.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=icon  href="/assets/favicon.ico"> <title>Using BERT for Sentiment Analysis</title> <header> <a class=title  href="/"><h2>@abhishalya</h2></a> <nav> <a href="/">Home</a> / <a href="/blog">Blog</a> / <a href="/projects">Projects</a> </nav> </header> <main> <div class=container ><p>This post is going to be a bit longer, so bear with me. I&#39;ve tried to explain everything a beginner &#40;like me&#41; can understand about the BERT model. This is also a part of submission for one of my GCI task where I was expected to train and test a dataset with BERT and use it as a classifier. There are more details in the following text.</p> <p>So, first lets get the basics out of the way:</p> <h2 id=basics ><a href="#basics">Basics</a></h2> <p>Bidirectional Encoder Representations from Transformers &#40;BERT&#41; is one of the most powerful language models right now. It was first published by Google AI in 2018 in a <a href="https://arxiv.org/pdf/1810.04805.pdf">paper</a>. The key point of BERT is to apply the bidirectional training of Transformer. At this point, you might be wondering what Transformers are, right? Well, I won&#39;t be getting deep into it so I want to recommend an <a href="https://nextjournal.com/chengchingwen/jsoc-2019-practical-implementation-of-bert-models-for-julia">excellent post by Peter Cheng</a> who has explained it in a very simple yet meaningful way. Do check it out, if you really want to know the basis of the BERT model.</p> <p>We&#39;ll now see how BERT works since this is quite important. I&#39;ll try to make it short to make it more understandable.</p> <h3 id=how_bert_works ><a href="#how_bert_works">How BERT works?</a></h3> <p>BERT makes use of Transformer, an attention mechanism that learns contextual relations between words &#40;or sub-words&#41; in a text. In its vanilla form, Transformer includes two separate mechanisms, an encoder that reads the text input and a decoder that produces a prediction for the task. Since BERT’s goal is to generate a language model, only the encoder mechanism is necessary. The detailed workings of Transformer are described in a paper by Google.</p> <p>As opposed to directional models, which read the text input sequentially &#40;left-to-right or right-to-left&#41;, the Transformer encoder reads the entire sequence of words at once. Therefore it is considered bidirectional, though it would be more accurate to say that it’s non-directional. This characteristic allows the model to learn the context of a word based on all of its surroundings &#40;left and right of the word&#41;.</p> <p>In BERT, we don&#39;t represent each word as a vector &#40;as we&#39;ve been doing since years in NLP&#41; instead we represent each &#39;subword token&#39; as a vector. That is, whenever the model finds an unknown word it tries to split the word into sub-pieces like the word root, prefixes, etc and use all the representational vectors of each sub-pieces together to represent the unfamiliar word.</p> <p><img src="../assets/images/bert-work-1.png" alt=bert-work-1  /></p> <p>Finally, we take the output of the last encder block as our final representation. We can just feed the representation of our old NLP model to BERT and get a much better performance. This means that the BERT isn&#39;t as complicated as some of the other NLP models. However, the BERT model is VERY large. As an instance, for the Aamzon Review dataset I wasn&#39;t able to train 10 reviews on my 6 GB GPU. Which I think is insane&#33; I&#39;ll get into more details in the upcoming sections.</p> <p>Well, that&#39;s for the general introduction to the BERT model. Its actually not complete, but I will mention those things over my own task to avoid redundancy in information.</p> <h2 id=what_was_my_task_and_how_i_did_it ><a href="#what_was_my_task_and_how_i_did_it">What was my task and how I did it?</a></h2> <p>My task was to train and test <a href="https://www.kaggle.com/bittlingmayer/amazonreviews">Amazon Review dataset</a> using BERT model present in <a href="https://github.com/chengchingwen/Transformers.jl">Transformers.jl</a> package.</p> <p>One of the nicest things of this task was that I was not aware of any such model. One of the key reasons of me participating and contributing to Julia was I wanted to get into Machine Learning and I wanted to learn a new language. Being introduced to such algorithms is I think one of the best things I could ever get. This task was also tagged as &#39;Advanced&#39; and while I&#39;ve completed it, I clearly understand why.</p> <p>In order to complete the task, I need to have a complete basic understanding of the model. It was a tough job, and while reading various blogs, papers, articles it was hard to process all that information. There are I think a lot of factors which I think only experienced ML people would get at first instance. I had to Google almost every new term I had discovered while reading. So, I spent time reading and understanding and after I had a basic idea, I was ready to look at the example code.</p> <p>The Transformers.jl repository already has few examples on BERT. Here we are working on Sentiment Analysis and hence we need to construct a classifier. We will now see the code and the output for the model I constructed. Its a bit long, and I won&#39;t be able to explain each and every section of the code. But, I&#39;ll cover up the important ones.</p> <h3 id=step_1_prepare_everything ><a href="#step_1_prepare_everything">Step 1: Prepare everything</a></h3> <p>First thing I believe is to prepare the data. You should download all the data files and keep them inside a folder. You&#39;d need some more files but, that would be a part of the code itself. Also, I&#39;m using IJulia to code everything out, and I would highly recommend it since it can save you a lot of time, especially if you are new to Julia.</p> <p>Also, we need to have all the dependencies installed before we move towards coding.</p> <blockquote> <p>Note: You&#39;ll need to have Julia 1.1 installed to manage the dependencies.</p> </blockquote> <p>This might change later on, but for now Transformers and its dependencies might not work on other versions.</p> <pre><code class="julia hljs">julia&gt; ]
 
-&#40;v1.1&#41; pkg&gt; add Transformers</code></pre> <p>Specific version of Flux is required here.</p> <pre><code class=language-julia >&#40;v1.1&#41; pkg&gt; add Flux@0.9.0</code></pre>
+(v1<span class=hljs-number >.1</span>) pkg&gt; add Transformers</code></pre> <p>Specific version of Flux is required here.</p> <pre><code class="julia hljs">(v1<span class=hljs-number >.1</span>) pkg&gt; add Flux@<span class=hljs-number >0.9</span><span class=hljs-number >.0</span></code></pre>
 <p>We need CuArrays at version 1.3.0.</p>
-<pre><code class=language-julia >&#40;v1.1&#41; pkg&gt; add CuArrays@1.3.0</code></pre>
+<pre><code class="julia hljs">(v1<span class=hljs-number >.1</span>) pkg&gt; add CuArrays@<span class=hljs-number >1.3</span><span class=hljs-number >.0</span></code></pre>
 <p>Currently, TextAnalysis works with Flux 0.9.</p>
-<pre><code class=language-julia >&#40;v1.1&#41; pkg&gt; add TextAnalysis</code></pre>
+<pre><code class="julia hljs">(v1<span class=hljs-number >.1</span>) pkg&gt; add TextAnalysis</code></pre>
 <p>Mange the versions as you&#39;d want them. These versions <em>can</em> change in the future and you&#39;ll need to find one combination that works with all. Once, you&#39;ve done that we can move towards coding part.</p>
 <p>You can find entire notebook here. &#40;No link, will publish it after GCI&#41;.</p>
 <p>First, lets get all of the packages imported</p>
-<pre><code class=language-jl >using CuArrays
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> CuArrays
 
-using Transformers
-using Transformers.Basic
-using Transformers.Pretrain
-using Transformers.Datasets
-using Transformers.BidirectionalEncoder
+<span class=hljs-keyword >using</span> Transformers
+<span class=hljs-keyword >using</span> Transformers.Basic
+<span class=hljs-keyword >using</span> Transformers.Pretrain
+<span class=hljs-keyword >using</span> Transformers.Datasets
+<span class=hljs-keyword >using</span> Transformers.BidirectionalEncoder
 
-using Flux
-using Flux: onehotbatch, gradient
-import Flux.Optimise: update&#33;
-using WordTokenizers</code></pre>
+<span class=hljs-keyword >using</span> Flux
+<span class=hljs-keyword >using</span> Flux: onehotbatch, gradient
+<span class=hljs-keyword >import</span> Flux.Optimise: update!
+<span class=hljs-keyword >using</span> WordTokenizers</code></pre>
 <p>Also, some constants we&#39;ll be using:</p>
-<pre><code class=language-jl >const labels &#61; &#40;&quot;0&quot;, &quot;1&quot;&#41;
-const opt &#61; ADAM&#40;1e-6&#41;
-const Batch &#61; 2
-const Epoch &#61; 1</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >const</span> labels = (<span class=hljs-string >&quot;0&quot;</span>, <span class=hljs-string >&quot;1&quot;</span>)
+<span class=hljs-keyword >const</span> opt = ADAM(<span class=hljs-number >1e-6</span>)
+<span class=hljs-keyword >const</span> Batch = <span class=hljs-number >2</span>
+<span class=hljs-keyword >const</span> Epoch = <span class=hljs-number >1</span></code></pre>
 <p>Of course, you can change these as per your requirement. I&#39;ve set Batch to 2 to save some memory and Epoch to 1 to save some time. Epoch being one just would mean that there will be a single iteration of weights update.</p>
 <p>Now, lets get the pretrained model. Here the downloading extracting the model will be taken care of by Transformers. All you need to do is following.</p>
-<pre><code class=language-jl >const _bert_model, wordpiece, tokenizer &#61; pretrain&quot;Bert-uncased_L-12_H-768_A-12&quot;</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >const</span> _bert_model, wordpiece, tokenizer = <span class=hljs-string >pretrain&quot;Bert-uncased_L-12_H-768_A-12&quot;</span></code></pre>
 <p>There are many variants released for the pre-trained model which you can find on Transformers docs or online or just run <code>pretrains&#40;&#41;</code> to find available ones. I&#39;m going to go with the above one.</p>
 <p>You might need to type <code>Y</code> as stdin. Alternatively, you can set <code>DATADEPS_ALWAYS_ACCEPT&#61;true</code> to avoid that.</p>
 <h3 id=step_2_preprocess_data ><a href="#step_2_preprocess_data">Step 2: Preprocess data</a></h3>
 <p>We need to first clean the data before we could use it. We can do this by using TextAnalysis.jl package.</p>
-<pre><code class=language-jl >using TextAnalysis
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> TextAnalysis
 
-function preprocess_data&#40;&#41;
-    open&#40;&quot;pre_train.txt&quot;&#41; do file
-        lines &#61; readlines&#40;file&#41;
-        for line in lines
-#             tag &#61; line&#91;1:10&#93;
-            tag &#61; line&#91;1&#93;
-            str_rev &#61; line&#91;3:end&#93;
-            str_doc &#61; StringDocument&#40;str_rev&#41;
-            prepare&#33;&#40;str_doc, strip_punctuation | strip_non_letters | strip_numbers&#41;
-            remove_case&#33;&#40;str_doc&#41;
-            stem&#33;&#40;str_doc&#41;
-            text&#40;str_doc&#41;
-            open&#40;&quot;new_pre_train.tsv&quot;, &quot;a&quot;&#41; do nfile
-                newtext &#61; text&#40;str_doc&#41;
-                write&#40;nfile, &quot;&#36;newtext\t&#36;tag\n&quot;&#41;
-            end
-        end
-    end
-end
+<span class=hljs-keyword >function</span> preprocess_data()
+    open(<span class=hljs-string >&quot;pre_train.txt&quot;</span>) <span class=hljs-keyword >do</span> file
+        lines = readlines(file)
+        <span class=hljs-keyword >for</span> line <span class=hljs-keyword >in</span> lines
+<span class=hljs-comment >#             tag = line[1:10]</span>
+            tag = line[<span class=hljs-number >1</span>]
+            str_rev = line[<span class=hljs-number >3</span>:<span class=hljs-keyword >end</span>]
+            str_doc = StringDocument(str_rev)
+            prepare!(str_doc, strip_punctuation | strip_non_letters | strip_numbers)
+            remove_case!(str_doc)
+            stem!(str_doc)
+            text(str_doc)
+            open(<span class=hljs-string >&quot;new_pre_train.tsv&quot;</span>, <span class=hljs-string >&quot;a&quot;</span>) <span class=hljs-keyword >do</span> nfile
+                newtext = text(str_doc)
+                write(nfile, <span class=hljs-string >&quot;<span class=hljs-variable >$newtext</span>\t<span class=hljs-variable >$tag</span>\n&quot;</span>)
+            <span class=hljs-keyword >end</span>
+        <span class=hljs-keyword >end</span>
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
 
-preprocess_data&#40;&#41;</code></pre>
+preprocess_data()</code></pre>
 <p>This above code might look a little ugly &#40;I might need to learn few more functions but let&#39;s keep it as future work&#41;, but it gets the job done. You should be doing this for training data, since this will clean up most of it that we don&#39;t require.</p>
 <p>To prepare it the way we require, we would need to add few more functions. This will create an iterator like object for our data.</p>
-<pre><code class=language-jl >using DelimitedFiles
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> DelimitedFiles
 
-function gen_train&#40;&#41;
-    sets &#61; readdlm&#40;&quot;new_pre_train.tsv&quot;, &#39;\t&#39;, String, quotes &#61; false&#41;
-    return &#91;selectdim&#40;sets, 2, i&#41; for i &#61; &#40;1,2&#41;&#93;
-end
+<span class=hljs-keyword >function</span> gen_train()
+    sets = readdlm(<span class=hljs-string >&quot;new_pre_train.tsv&quot;</span>, &#x27;\t&#x27;, <span class=hljs-built_in >String</span>, quotes = <span class=hljs-literal >false</span>)
+    <span class=hljs-keyword >return</span> [selectdim(sets, <span class=hljs-number >2</span>, i) <span class=hljs-keyword >for</span> i = (<span class=hljs-number >1</span>,<span class=hljs-number >2</span>)]
+<span class=hljs-keyword >end</span>
 
-datas &#61; gen_train&#40;&#41; # This will be used in the &#96;train&#33;&#40;&#41;&#96; function</code></pre>
-<pre><code class=language-jl >const vocab &#61; Vocabulary&#40;wordpiece&#41;
+datas = gen_train() <span class=hljs-comment ># This will be used in the `train!()` function</span></code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >const</span> vocab = Vocabulary(wordpiece)
 
-markline&#40;sent&#41; &#61; &#91;&quot;&#91;CLS&#93;&quot;; sent; &quot;&#91;SEP&#93;&quot;&#93;
+markline(sent) = [<span class=hljs-string >&quot;[CLS]&quot;</span>; sent; <span class=hljs-string >&quot;[SEP]&quot;</span>]
 
-function preprocess&#40;batch&#41;
-    sentence &#61; markline.&#40;wordpiece.&#40;tokenizer.&#40;batch&#91;1&#93;&#41;&#41;&#41;
-    mask &#61; getmask&#40;sentence&#41;
-    tok &#61; vocab&#40;sentence&#41;
-    segment &#61; fill&#33;&#40;similar&#40;tok&#41;, 1&#41;
+<span class=hljs-keyword >function</span> preprocess(batch)
+    sentence = markline.(wordpiece.(tokenizer.(batch[<span class=hljs-number >1</span>])))
+    mask = getmask(sentence)
+    tok = vocab(sentence)
+    segment = fill!(similar(tok), <span class=hljs-number >1</span>)
     
-    label &#61; onehotbatch&#40;batch&#91;2&#93;, labels&#41;
-    return &#40;tok &#61; tok, segment &#61; segment&#41;, label, mask
-end
+    label = onehotbatch(batch[<span class=hljs-number >2</span>], labels)
+    <span class=hljs-keyword >return</span> (tok = tok, segment = segment), label, mask
+<span class=hljs-keyword >end</span>
 
-preprocess&#40;get_batch&#40;datas, 4&#41;&#41;</code></pre>
+preprocess(get_batch(datas, <span class=hljs-number >4</span>))</code></pre>
 <p>Here basically what we do it get mask for a sentence, on a way that we don&#39;t want the model to return the same output. Masks lets us hide it to get a different output. We&#39;d be defining the <code>get_batch</code> function as well as the datas. Here, datas represent the training or testing data we will be using in this model.</p>
-<pre><code class=language-jl >function get_batch&#40;c::Channel, n&#61;1&#41;
-    res &#61; Vector&#40;undef, n&#41;
-    for &#40;i, x&#41; ∈ enumerate&#40;c&#41;
-        res&#91;i&#93; &#61; x
-        i &gt;&#61; n &amp;&amp; break
-    end
-    isassigned&#40;res, n&#41; ? batched&#40;res&#41; : nothing
-end</code></pre>
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> get_batch(c::<span class=hljs-built_in >Channel</span>, n=<span class=hljs-number >1</span>)
+    res = <span class=hljs-built_in >Vector</span>(undef, n)
+    <span class=hljs-keyword >for</span> (i, x) ∈ enumerate(c)
+        res[i] = x
+        i &gt;= n &amp;&amp; <span class=hljs-keyword >break</span>
+    <span class=hljs-keyword >end</span>
+    isassigned(res, n) ? batched(res) : <span class=hljs-literal >nothing</span>
+<span class=hljs-keyword >end</span></code></pre>
 <h3 id=step_3_training_and_testing_the_model ><a href="#step_3_training_and_testing_the_model">Step 3: Training and testing the model</a></h3>
 <p>First, lets define the <code>bert_model</code> and the <code>clf</code>.</p>
-<pre><code class=language-jl >const clf &#61; gpu&#40;Chain&#40;
-        Dropout&#40;0.1&#41;,
-        Dense&#40;size&#40;_bert_model.classifier.pooler.W, 1&#41;, length&#40;labels&#41;&#41;,
+<pre><code class="julia hljs"><span class=hljs-keyword >const</span> clf = gpu(Chain(
+        Dropout(<span class=hljs-number >0.1</span>),
+        Dense(size(_bert_model.classifier.pooler.W, <span class=hljs-number >1</span>), length(labels)),
         logsoftmax
-&#41;&#41;
+))
 
-const bert_model &#61; gpu&#40;
-    set_classifier&#40;_bert_model,
-                    &#40;
-                        pooler &#61; _bert_model.classifier.pooler,
-                        clf &#61; clf
-                    &#41;
-                  &#41;
-&#41;</code></pre>
+<span class=hljs-keyword >const</span> bert_model = gpu(
+    set_classifier(_bert_model,
+                    (
+                        pooler = _bert_model.classifier.pooler,
+                        clf = clf
+                    )
+                  )
+)</code></pre>
 <p>We&#39;d be calculating the log cross entropy loss through the loss function:</p>
-<pre><code class=language-jl >function loss&#40;data, label, mask&#61;nothing&#41;
-    e &#61; bert_model.embed&#40;data&#41;
-    t &#61; bert_model.transformers&#40;e, mask&#41;
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> loss(data, label, mask=<span class=hljs-literal >nothing</span>)
+    <span class=hljs-literal >e</span> = bert_model.embed(data)
+    t = bert_model.transformers(<span class=hljs-literal >e</span>, mask)
 
-    p &#61; bert_model.classifier.clf&#40;
-        bert_model.classifier.pooler&#40;
-            t&#91;:,1,:&#93;
-        &#41;
-    &#41;
+    p = bert_model.classifier.clf(
+        bert_model.classifier.pooler(
+            t[:,<span class=hljs-number >1</span>,:]
+        )
+    )
 
-    l &#61; Basic.logcrossentropy&#40;label, p&#41;
-    return l, p
-end</code></pre>
+    l = Basic.logcrossentropy(label, p)
+    <span class=hljs-keyword >return</span> l, p
+<span class=hljs-keyword >end</span></code></pre>
 <p>Finally, lets define the <code>train&#33;&#40;&#41;</code> fucntion</p>
-<pre><code class=language-jl >function train&#33;&#40;&#41;
-    global Batch
-    global Epoch
-    @info &quot;start training:&quot;
-    for e &#61; 1:Epoch
-        @info &quot;epoch: &#36;e&quot;
-        datas &#61; datas_tr # Training data generated
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> train!()
+    <span class=hljs-keyword >global</span> Batch
+    <span class=hljs-keyword >global</span> Epoch
+    <span class=hljs-meta >@info</span> <span class=hljs-string >&quot;start training:&quot;</span>
+    <span class=hljs-keyword >for</span> <span class=hljs-literal >e</span> = <span class=hljs-number >1</span>:Epoch
+        <span class=hljs-meta >@info</span> <span class=hljs-string >&quot;epoch: <span class=hljs-variable >$e</span>&quot;</span>
+        datas = datas_tr <span class=hljs-comment ># Training data generated</span>
 
-        i &#61; 1
-        al::Float64 &#61; 0.
-        while &#40;batch &#61; get_batch&#40;datas, Batch&#41;&#41; &#33;&#61;&#61; nothing
-            data, label, mask &#61; todevice&#40;preprocess&#40;batch&#41;&#41;
-            l, p &#61; loss&#40;data, label, mask&#41;
-            # @show l
-            a &#61; acc&#40;p, label&#41;
-            al &#43;&#61; a
-            grad &#61; gradient&#40;&#40;&#41;-&gt;l, ps&#41;
-            i&#43;&#61;1
-            update&#33;&#40;opt, ps, grad&#41;
-            i&#37;16&#61;&#61;0 &amp;&amp; @show al/i
-        end
+        i = <span class=hljs-number >1</span>
+        al::<span class=hljs-built_in >Float64</span> = <span class=hljs-number >0.</span>
+        <span class=hljs-keyword >while</span> (batch = get_batch(datas, Batch)) !== <span class=hljs-literal >nothing</span>
+            data, label, mask = todevice(preprocess(batch))
+            l, p = loss(data, label, mask)
+            <span class=hljs-comment ># @show l</span>
+            a = acc(p, label)
+            al += a
+            grad = gradient(()-&gt;l, ps)
+            i+=<span class=hljs-number >1</span>
+            update!(opt, ps, grad)
+            i%<span class=hljs-number >16</span>==<span class=hljs-number >0</span> &amp;&amp; <span class=hljs-meta >@show</span> al/i
+        <span class=hljs-keyword >end</span>
 
-        test&#40;&#41;
-    end
-end</code></pre>
+        test()
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span></code></pre>
 <p>After looping through all of the data, we will move towards testing it:</p>
-<pre><code class=language-jl >function test&#40;&#41;
-    Flux.testmode&#33;&#40;bert_model&#41;
-    i &#61; 1
-    al::Float64 &#61; 0.
-    datas &#61; datas_te # Testing data generated
-    while &#40;batch &#61; get_batch&#40;datas, Batch&#41;&#41; &#33;&#61;&#61; nothing
-      data, label, mask &#61; todevice&#40;preprocess&#40;batch&#41;&#41;
-      _, p &#61; loss&#40;data, label, mask&#41;
-      # @show l
-      a &#61; acc&#40;p, label&#41;
-      al &#43;&#61; a
-      i&#43;&#61;1
-    end
-    al /&#61; i
-    Flux.testmode&#33;&#40;bert_model, false&#41;
-    @show al
-end
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> test()
+    Flux.testmode!(bert_model)
+    i = <span class=hljs-number >1</span>
+    al::<span class=hljs-built_in >Float64</span> = <span class=hljs-number >0.</span>
+    datas = datas_te <span class=hljs-comment ># Testing data generated</span>
+    <span class=hljs-keyword >while</span> (batch = get_batch(datas, Batch)) !== <span class=hljs-literal >nothing</span>
+      data, label, mask = todevice(preprocess(batch))
+      _, p = loss(data, label, mask)
+      <span class=hljs-comment ># @show l</span>
+      a = acc(p, label)
+      al += a
+      i+=<span class=hljs-number >1</span>
+    <span class=hljs-keyword >end</span>
+    al /= i
+    Flux.testmode!(bert_model, <span class=hljs-literal >false</span>)
+    <span class=hljs-meta >@show</span> al
+<span class=hljs-keyword >end</span>
 
-&#33;train&#40;&#41;</code></pre>
+!train()</code></pre>
 <p>Finally, the <code>al</code> will represent the overall accuracy in the output. Here, there are just a lot of things to explain if you go code by code. But, there are lot of simple things as well which don&#39;t need explaining.</p>
 <p>If anyone who is very new to all this should read or learn a bit more about the functions and what they represent and try to understand how the code is written and what task it does.</p>
 <blockquote>
@@ -216,8 +216,8 @@ end
     </div>  
     
     
-        <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+        
+
 
     
     <footer>
