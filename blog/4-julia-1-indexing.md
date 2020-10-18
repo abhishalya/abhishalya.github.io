@@ -12,7 +12,7 @@ First, what these indexing types mean?
 The 0-based indexing considers the first element in a container to be at
 index = 0, i.e. if we declare an array:
 
-```jl
+```julia
 x = [1, 2, 3]
 ```
 
