@@ -2,6 +2,8 @@
 @def published = "21 January 2019"
 @def tags = ["cp"]
 
+# CodeChef Div 1!
+
 So there was a long gap in the contests on Codeforces. I was only able to
 participate in two contests this week:
 

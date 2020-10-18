@@ -2,6 +2,8 @@
 @def published = "16 December 2019"
 @def tags = ["julia", "code-in"]
 
+# Developing apps using Interact.jl
+
 I think many of you might think that it is quite impossible or hard to develop
 a web-app in Julia. Well, you are wrong! Developing a web-app using Julia is
 very much possible and is easy too. This post will give you a brief guide to

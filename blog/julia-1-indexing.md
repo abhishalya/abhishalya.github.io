@@ -2,6 +2,8 @@
 @def published = "07 December 2019"
 @def tags = ["julia", "code-in"]
 
+# 1-based vs 0-based Indexing in Julia
+
 So, in the previous post I mentioned how we can use Julia to do arbitrary or
 0-based indexing. In this post, we will talk about what are the differences
 between the two indexing types and why is it such a big deal. (It's not as

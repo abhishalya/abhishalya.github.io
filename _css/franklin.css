@@ -96,6 +96,10 @@ footer {
   font-size: small;
 }
 
+.social-media {
+  float: right;
+}
+
 /* blog posts */
 ul.blog-posts {
   list-style-type: none;

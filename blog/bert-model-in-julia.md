@@ -2,6 +2,8 @@
 @def published = "10 December 2019"
 @def tags = ["julia", "code-in"]
 
+# Using BERT for Sentiment Analysis
+
 This post is going to be a bit longer, so bear with me. I've tried to explain
 everything a beginner (like me) can understand about the BERT model. This is
 also a part of submission for one of my GCI task where I was expected to train

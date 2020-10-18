@@ -2,6 +2,8 @@
 @def published = "07 January 2019"
 @def tags = ["cp"]
 
+# Awesome start for new year!
+
 This is the last day of the first week of January. The results of GCI are
 supposed to be announced today at 22:30 IST but I'm not that curious for the
 results since I have already blown up the chance of winning something.
