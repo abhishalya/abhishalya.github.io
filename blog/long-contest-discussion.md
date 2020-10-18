@@ -2,6 +2,8 @@
 @def published = "15 January 2019"
 @def tags = ["cp"]
 
+# Long challenge problem discussion
+
 So finally, long challenge is over which to be honest wasn't very long for me.
 I only did 4 problems after which I lost the interest in solving problems.
 I prefer the problems that are short and has a good logic or something that is

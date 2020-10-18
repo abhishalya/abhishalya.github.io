@@ -1,8 +1,14 @@
 @def title="Projects"
 
-# Projects
+~~~
+<h1>Projects</h1>
+~~~
 
-## [ZoomCord](https://github.com/MLH-Fellowship/ZoomCord)
+~~~
+<h2>ZoomCord</h2>
+~~~
+
+Source: [GitHub](https://github.com/MLH-Fellowship/ZoomCord)
 
 A Discord bot written in Julia using
 [Discord.jl](https://github.com/Xh4H/Discord.jl) and
@@ -13,13 +19,26 @@ This project was a part of the MLH hackathon in which along with me
 [Diaga](https://github.com/Diaga) and [makrandr](https://github.com/makrandr)
 collaborated and submitted this project.
 
-## [InteractDeploy.jl](https://github.com/abhishalya/InteractDeploy.jl)
+---
+
+~~~
+<h2>InteractDeploy.jl</h2>
+
+~~~
+
+Source: [GitHub](https://github.com/abhishalya/InteractDeploy.jl)
 
 A script to deploy your interact web application with Heroku.
 
 To be soon developed into a Julia package with command line interface.
 
-## [cmbot](https://github.com/codemute/cmbot)
+---
+
+~~~
+<h2>cmbot</h2>
+~~~
+
+Source: [GitHub](https://github.com/codemute/cmbot)
 
 A multi-backend bot written in Python with Errbot.
 
@@ -28,7 +47,13 @@ cmbot was written to aid git requirements for the
 on projects along with my fellow classmates and other students. The bot
 supports multiple chat platforms including gitter, zulip, etc.
 
-## [rating-image-generator](https://github.com/abhishalya/rating-image-generator)
+---
+
+~~~
+<h2>rating-image-generator</h2>
+~~~
+
+Source: [Github](https://github.com/abhishalya/rating-image-generator)
 
 rating-image-generator is a small little proejct to create fancy rating badges
 for your favourite competitive programming platform.

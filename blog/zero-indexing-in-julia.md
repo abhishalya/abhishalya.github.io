@@ -2,6 +2,8 @@
 @def published = "07 December 2019"
 @def tags = ["julia", "code-in"]
 
+# 0-based Indexing in Julia
+
 This is one of the submission blog post for the ongoing [Google Code-in
 competition](https://codein.withgoogle.com/). This year I was mainly
 concentrating on Julia tasks. I think you get to learn much more when you

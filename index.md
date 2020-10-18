@@ -4,14 +4,8 @@
 <h1>Hi there!</h1>
 ~~~
 
-I'm Abhinav, a high-school student currently studying at Kendriya Vidyalaya
-and residing in India. I love to code, play sports, litsen to music and watch
-movies.
-
-I would love to have a chat with you. Find me on
-[LinkedIn](https://www.linkedin.com/in/abhishalya/),
-[Github](https://github.com/abhishalya),
-[Twitter](https://twitter.com/abhishalya).
+I'm Abhinav, an open-source contributor working with the Julia community on
+building high quality scientific software.
 
 ---
 
@@ -21,11 +15,17 @@ I would love to have a chat with you. Find me on
 <h2>MLH Fellowship</h2>
 ~~~
 
-Currently working as a MLH fellow contributing to some of the Julia projects
-including [Flux.jl](https://fluxml.ai/) and
+One of the MLH fellows contributing to Julia projects including
+[Flux.jl](https://fluxml.ai/) and
 [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl/).
 
->Will get more experince as I work more. Actively looking for internships.
+~~~
+<h2>coala Maintainer</h2>
+~~~
+
+I currently maintain [coala](https://github.com/coala), an open-source project
+that helps you write the cleanest code irrespective of the language and all
+of that in a single config file which works nicely with your CI configuration.
 
 ---
 
