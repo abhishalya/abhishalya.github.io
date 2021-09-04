@@ -74,6 +74,7 @@ function hfun_custom_taglist()::String
         title = pagevar(rpath, :title)
         pubdate = pagevar(rpath, :published)
         if isnothing(pubdate)
+            today = Dates.today()
             curyear = year(today)
             curmonth = month(today)
             curday = day(today)
