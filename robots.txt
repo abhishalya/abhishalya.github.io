@@ -1,4 +1,4 @@
-Sitemap: https://abhishalya.tech/sitemap.xml
+Sitemap: https://abhishalya.github.io/sitemap.xml
 
 User-agent: *
 Disallow:
